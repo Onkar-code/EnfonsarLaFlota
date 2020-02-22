@@ -78,7 +78,7 @@ public class ComandaNou {
         //BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         
         //cridem a la funció nou
-        //nou();                 
+        nou();                 
     }       
 }
            
