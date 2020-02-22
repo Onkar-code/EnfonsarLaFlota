@@ -18,6 +18,10 @@ public class ConstructorTaulell{
     //Aquesta variable String és el missatge que imprimim per pantalla quan executem una comanda que no permet treballar sense taulell.
     String missatgeNoHiHaTaulell = "No hi ha cap taulell. Considereu les opcions NOU o CARREGA";
 
+    //Aquesta llista representa totes les comandes disponibles
+    static String[] llistaComandes = {"AJUDA","AFEGEIX","CARREGA","ELIMINA","GUARDA","LLISTA","NOU","MOSTRA","OBLIDA"}; 
+
+
     //main
     public static void main(String[] args) throws IOException{
 
@@ -33,7 +37,7 @@ public class ConstructorTaulell{
             comanda = entrada.readLine();       // llegim una línia de text
 
         }
-        while (! comandaEsValida(comanda));
+        while (! comandaEsValida(comanda, llistaComandes));
 
         //si l'entrada és vàlida llavors és processarà amb la funció gestorComanda
 
@@ -47,13 +51,12 @@ public class ConstructorTaulell{
         //Primer convertim la comanda a majúscules per no distingir entre majúscules i minúscules
         comanda = comanda.toUpperCase();
 
-        String[] llistaComandes = {"AJUDA","AFEGEIX","CARREGA","ELIMINA","GUARDA","LLISTA","NOU","MOSTRA","OBLIDA"}; 
 
         //Amb aquest booleà sabrem si la comanda pertany a la llista de comandes vàlides (llistaComandes).
         boolean trobat = false;
 
         // Recorrem tota la llista de comandes vàlides i si hi ha una coincidencia trobat passa a ser certa i sortim.
-        for(int i = 0; i < comanda.length();i++){
+        for(int i = 0; i < llistaComandes.length;i++){
             if(comanda.equals(llistaComandes[i])){
                 trobat = true;
                 return trobat;
