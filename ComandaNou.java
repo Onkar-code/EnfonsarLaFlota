@@ -24,7 +24,7 @@ public class ComandaNou {
         }             
     }
     
-    public static void nou(){
+    public static void nou() throws IOException{
         //TODO si hi ha un vaixell considerar la opció GUARAD o OBLIDA
         //TODO constantes locales pendiente de mirar si pueden aprovechar las del ConstructorTaulel
         final static int TAMANY_MAXIM_FILES = 99;
