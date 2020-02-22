@@ -16,7 +16,7 @@ public class ConstructorTaulell{
     public static void main(String[] args) throws IOException{
 
         System.out.println("Benvingut a Enfonsar la flota \nAra hi ets al Constructor de taulells");
-        System.out.println("Introdueix la comanda que vols executar: ");
+        System.out.println("Introdueix la comanda que vols aaa executar: ");
 
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         String comanda = entrada.readLine();       // llegim una línia de text
