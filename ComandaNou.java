@@ -13,7 +13,7 @@ public class ComandaNou {
     //static boolean taulellEnConstruccio = true;
     
     // comprobar si les dimensions son  válides
-    static boolean dimensionsValida(int valor) {
+    public static boolean dimensionsValida(int valor) {
         if ((valor < TAMANY_MINIM_FILES || valor > TAMANY_MAXIM_FILES) || (valor < TAMANY_MINIM_COLUMNES || valor > TAMANY_MAXIM_COLUMNES)) {
             System.out.println("Cal un enter entre 1 i 99");
             return false;
@@ -24,7 +24,7 @@ public class ComandaNou {
         }             
     }
     
-    static void nou(){
+    public static void nou(){
         //TODO si hi ha un vaixell considerar la opció GUARAD o OBLIDA
         int filesEnter, columnaEnter;
         if (! taulellEnConstruccio) {
@@ -65,7 +65,7 @@ public class ComandaNou {
     
     
     
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) {
         //BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         
         //cridem a la funció nou
