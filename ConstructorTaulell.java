@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
+// Tenim de prova l'scanner
+import java.util.Scanner;
+
 
 public class ConstructorTaulell{
 
@@ -26,6 +29,9 @@ public class ConstructorTaulell{
 
     //Aquesta llista representa totes les comandes disponibles
     static String[] llistaComandes = {"AJUDA","AFEGEIX","CARREGA","ELIMINA","GUARDA","LLISTA","NOU","MOSTRA","OBLIDA","SURT"}; 
+    static String[] guardaOblida = {"GUARDA","OBLIDA"};
+    static String[] nouCarrega = {"NOU","CARREGA"};
+
 
 
     //main
@@ -110,7 +116,7 @@ public class ConstructorTaulell{
             case "OBLIDA":
                 break;
             
-            case "SURT";
+            case "SURT":
                 surt();
                 break;
             
@@ -277,15 +283,66 @@ public class ConstructorTaulell{
 
     }
 */
-    public static void surt{
+    public static void surt(){
 
         if (! taulellEnConstruccio){
             System.out.println("Fet!");
             System.exit(0);
         }
-        else{
-
+        else {
+            subMenuComandes(guardaOblida);
         }
+    }
+
+    public static void subMenuComandes(String[] llistaComandesDisponibles){
+            
+            System.out.println("Ja hi ha un taulell. Considereu les opcions GUARDA o OBLIDA");
+            String comanda;
+            //String[] llistaComandes = {"GUARDA","OBLIDA"};
+            
+
+            // Demanem l'entrada de la comanda continuament fins que introdueixi GUARDA o OBLIDA
+            do {
+                Scanner entrada = new Scanner(System.in);                
+                comanda = entrada.next();            
+            } while (! ConstructorTaulell.comandaEsValida(comanda, llistaComandesDisponibles));
+            
+            // Convertim comanda a majúscules
+            comanda = comanda.toUpperCase();
+
+
+            switch(comanda){
+
+            case "CARREGA":
+                break;
+
+            case "NOU":
+                nou();
+                break;
+            
+            case "GUARDA":
+                break;
+
+            case "OBLIDA":
+                break;
+
+            }
+
+            /*
+            // Controlem el flux
+            if(comanda.equals("GUARDA")){
+                //TODO guarda();
+            }
+            else if(comanda.equals("OBLIDA")){
+                //TODO oblida();
+            }
+
+            else{
+                System.out.println("error");
+            }
+            */
+
+            //TODO
     }
 
 
@@ -336,19 +393,19 @@ public class ConstructorTaulell{
                 columnaEnter = Integer.parseInt(columna);
             
             } while (! dimensionsValida(columnaEnter));
+
+
+            //TODO crear tabla con filasXcolumnas
+            System.out.println("Fet!");
+
+
+
         
         //cas en el que existeix un taulell 
         } else {
-            //TODO
-            System.out.println("Ja hi ha un taulell. Considereu les opcions GUARDA o OBLIDA");
-            String comanda;
-            String[] llistaComandes = {"GUARDA","OBLIDA"};
             
-            do {                
-                comanda = entrada.readLine();            
-            } while (! ConstructorTaulell.comandaEsValida(comanda, llistaComandes));
+            subMenuComandes(guardaOblida);
             
-            System.out.println("OK");
         }     
     }
     
