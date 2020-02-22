@@ -17,7 +17,7 @@ public class ConstructorTaulell{
 
     //Aquesta variable String és el missatge que imprimim per pantalla quan executem una comanda que no permet treballar sense taulell.
     String missatgeNoHiHaTaulell = "No hi ha cap taulell. Considereu les opcions NOU o CARREGA";
-
+S
     //main
     public static void main(String[] args) throws IOException{
 
@@ -33,7 +33,7 @@ public class ConstructorTaulell{
             comanda = entrada.readLine();       // llegim una línia de text
 
         }
-        while (! comandaEsValida(comanda));
+        while (! comandaIsValida(comanda));
 
         //si l'entrada és vàlida llavors és processarà amb la funció gestorComanda
 
@@ -41,7 +41,7 @@ public class ConstructorTaulell{
         
     }
 
-    public static boolean comandaEsValida(String comanda, String[] llistaComandes){
+    public static boolean comandaIsValida(String comanda){
         // Aquesta funció accepta una comanda i retorna true si la comanda és vàlida i false en cas contrari
 
         //Primer convertim la comanda a majúscules per no distingir entre majúscules i minúscules
@@ -75,23 +75,23 @@ public class ConstructorTaulell{
         public static void gestorComanda(String comanda){
 
         switch(comanda){
-            case "AJUDA":
+            case comanda.equals("AJUDA"):
 
-            case "AFEGEIX":
+            case comanda.equals("AFEGEIX"):
 
-            case "CARREGA":
+            case comanda.equals("CARREGA"):
 
-            case "ELIMINA":
+            case comanda.equals("ELIMINA"):
 
-            case "GUARDA":
+            case comanda.equals("GUARDA"):
 
-            case "LLISTA":
+            case comanda.equals("LLISTA"):
 
-            case "NOU":
+            case comanda.equals("NOU"):
 
-            case "MOSTRA":
+            case comanda.equals("MOSTRA"):
 
-            case "OBLIDA":
+            case comanda.equals("OBLIDA"):
             
 
             // en principi el default no s'executarà mai. Podriem tancar el programa si s'executa aquest codi.
@@ -106,13 +106,12 @@ public class ConstructorTaulell{
 ****************************************************************************
 */
 
-/*
     public static void ajuda{
         //el programa mostra un text d’ajuda amb les diferents comandes disponibles.
 
         System.out.println("Les comandes que pots utilizar són: \n");
 
-        String comandesEnComu = "AJUDA, LLISTA, SURT";
+        String comandesEnComu = "AJUDA, LLISTA, SURT"
 
         if (taulellEnConstruccio){
 
@@ -130,7 +129,7 @@ public class ConstructorTaulell{
 
         //Si no hi ha cap taulell avisem
         if(! taulellEnConstruccio){
-            System.out.println(missatgeNoHiHaTaulell);
+            System.out.println("No hi ha cap taulell. Considereu les opcions NOU o CARREGA");
         }
 
         else{
@@ -178,19 +177,9 @@ public class ConstructorTaulell{
             System.out.println(missatgeNoHiHaTaulell);
         }
 
-        else{
-            //descripció vaixell
-            //TODO Si el vaixell està malament descrit, o no es troba al taulell es mostra el missatge d’error Vaixell no vàlid.
-
-            //TODO Si el vaixell ha estat descrit correctament i es troba al taulell, llavors el programa l’elimina del taulell.
-
-            //TODO En cas que tot hagi anat bé, el programa ho indicarà amb el missatge Fet!
-        }
-
 
     }
     public static void guarda{
-        //es vol guardar el taulell en construcció
 
     }
     public static void llista{
@@ -205,8 +194,6 @@ public class ConstructorTaulell{
     public static void oblida{
 
     }
-*/
+
 }
-
-
 
