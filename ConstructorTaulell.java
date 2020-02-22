@@ -7,10 +7,16 @@ import java.io.IOException;
 
 public class ConstructorTaulell{
 
+/*
     // Definim les variables globals:
-    // Aquestes dues inidquen el tamany màxim del taulell, són constants.
+    // Aquestes quatre inidquen el tamany màxim i mínim del taulell, són constants.
+    
     final static int TAMANY_MAXIM_FILES = 99;
     final static int TAMANY_MAXIM_COLUMNES = 99;
+    
+    final static int TAMANY_MINIM_FILES= 1;
+    final static int TAMANY_MINIM_COLUMNES= 1;   
+*/
 
     //Amb aquesta variable booleana sabem si tenim algun taulell en construcció o no
     static boolean taulellEnConstruccio = false;
@@ -91,6 +97,7 @@ public class ConstructorTaulell{
             case "LLISTA":
 
             case "NOU":
+                ComandaNou.nou();
 
             case "MOSTRA":
 
@@ -108,8 +115,8 @@ public class ConstructorTaulell{
                                 COMANDES VALIDES
 ****************************************************************************
 */
-
 /*
+
     public static void ajuda{
         //el programa mostra un text d’ajuda amb les diferents comandes disponibles.
 
@@ -195,8 +202,28 @@ public class ConstructorTaulell{
     public static void guarda{
         //es vol guardar el taulell en construcció
 
+        //Si no hi ha cap taulell avisem
+        if(! taulellEnConstruccio){
+            System.out.println(missatgeNoHiHaTaulell);
+        }
+
+        else{
+            //TODO Si hi ha un taulell en construcció, es demana un nom pel taulell.
+
+            //TODO Si el nom del taulell existeix, es sobreescriu el seu contingut amb el del taulell actual. Atenció: això és una simplificació. Normalment hem de fer que els nostres programes demanin confirmació abans de realitzar accions que puguin fer perdre informació.
+
+            //TODO Si el nom del taulell no existeix, es crea un de nou i s’hi guarda el contingut del taulell actual.
+
+            //TODO  En cas que tot hagi anat bé, el programa ho indicarà amb el missatge Fet!.
+
+        }
+
     }
     public static void llista{
+        // es vol veure la llista dels taulells guardats
+        // Aquesta opció és vàlida amb i sense taulell en construcció.
+        // El programa mostra la llista dels noms dels taulells guardats.
+
 
     }
     public static void nou{
