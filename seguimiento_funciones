@@ -1,0 +1,19 @@
+Planteadas las constantes de clase
+
+Planteado el main(), do() while de comandas -> gestorComanda(comanda) [recibe la comanda ya válida]
+
+FUNCIÓN BOOLEANA comandaEsValida() Hecha
+
+gestorcomanda() planteado
+
+estructura y requisitos de las comandas
+
+comanda PROCEDIMIENTO surt() hecha
+
+PROCEDIMIENTO comandaGuardaoOblida() planteado, falta hacer guarda() y oblida()
+
+PROCEDIMIENTO afegeix() planteado. PENDIENTE else{ Añadir barcos} 
+
+
+
+

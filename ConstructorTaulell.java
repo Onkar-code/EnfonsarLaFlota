@@ -295,8 +295,14 @@ public class ConstructorTaulell{
     }
 
     public static void subMenuComandes(String[] llistaComandesDisponibles){
-            
-            System.out.println("Ja hi ha un taulell. Considereu les opcions GUARDA o OBLIDA");
+
+            if(llistaComandesDisponibles[0] == "NOU"){
+                System.out.println("Ja hi ha un taulell. Considereu les opcions NOU o CARREGA");
+            }   
+            else{
+                System.out.println("Ja hi ha un taulell. Considereu les opcions GUARDA o OBLIDA");
+            }
+
             String comanda;
             //String[] llistaComandes = {"GUARDA","OBLIDA"};
             
