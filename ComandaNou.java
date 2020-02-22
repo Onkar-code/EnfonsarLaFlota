@@ -26,6 +26,7 @@ public class ComandaNou {
     
     static void nou(){
         //TODO si hi ha un vaixell considerar la opció GUARAD o OBLIDA
+        int filesEnter, columnaEnter;
         if (! taulellEnConstruccio) {
         
             //demanem numero de columnes del taulell
@@ -65,10 +66,10 @@ public class ComandaNou {
     
     
     public static void main(String[] args) throws IOException{
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
-        int filesEnter, columnaEnter;
+        //BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+        
         //cridem a la funció nou
-        nou();                 
+        //nou();                 
     }       
 }
            
