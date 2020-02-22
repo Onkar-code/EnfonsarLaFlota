@@ -6,8 +6,8 @@ import java.io.FileWriter;
 public class ComandaLlista {
     
     public static void mostraFitxersCarpetaTaulells() {
-        //modificar el nom de la carpeta on guardarem els taulells
-        File cwd = new File("archivos_de_texto/");
+        //el enunciat indica que el directori s'anomenará taulells 
+        File cwd = new File("taulells/");
         File[] paths = cwd.listFiles();      
 
         //comprovem si no hi ha cap taulell guardat
@@ -20,9 +20,9 @@ public class ComandaLlista {
                 if (! path.isFile()) {
                     continue; 
                 }          
-                //mostrem cada un dels taulells guardats
+                //mostrem cada un dels taulells guardats com .taulell segons l'enunciatq
                 
-                if (path.getName().endsWith(".txt")) {
+                if (path.getName().endsWith(".taulell")) {
                     System.out.printf("" + path.getName() + "%n");
                     
                 } 
