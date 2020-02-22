@@ -26,6 +26,12 @@ public class ComandaNou {
     
     public static void nou(){
         //TODO si hi ha un vaixell considerar la opció GUARAD o OBLIDA
+        final static int TAMANY_MAXIM_FILES = 99;
+        final static int TAMANY_MAXIM_COLUMNES = 99;
+    
+        final static int TAMANY_MINIM_FILES= 1;
+        final static int TAMANY_MINIM_COLUMNES= 1;    
+    
         int filesEnter, columnaEnter;
         if (! taulellEnConstruccio) {
         
