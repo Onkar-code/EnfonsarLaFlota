@@ -27,11 +27,11 @@ public class ComandaNou {
     public static void nou() throws IOException{
         //TODO si hi ha un vaixell considerar la opció GUARAD o OBLIDA
         //TODO constantes locales pendiente de mirar si pueden aprovechar las del ConstructorTaulel
-        final static int TAMANY_MAXIM_FILES = 99;
-        final static int TAMANY_MAXIM_COLUMNES = 99;
+        final int TAMANY_MAXIM_FILES = 99;
+        final int TAMANY_MAXIM_COLUMNES = 99;
     
-        final static int TAMANY_MINIM_FILES= 1;
-        final static int TAMANY_MINIM_COLUMNES= 1;    
+        final int TAMANY_MINIM_FILES= 1;
+        final int TAMANY_MINIM_COLUMNES= 1;    
     
         int filesEnter, columnaEnter;
         //entrada estandar
@@ -78,7 +78,7 @@ public class ComandaNou {
         //BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         
         //cridem a la funció nou
-        nou();                 
+        //nou();                 
     }       
 }
            
