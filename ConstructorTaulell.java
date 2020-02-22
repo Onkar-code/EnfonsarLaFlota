@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class ConstructorTaulell{
 
-/*
+
     // Definim les variables globals:
     // Aquestes quatre inidquen el tamany màxim i mínim del taulell, són constants.
     
@@ -16,7 +16,7 @@ public class ConstructorTaulell{
     
     final static int TAMANY_MINIM_FILES= 1;
     final static int TAMANY_MINIM_COLUMNES= 1;   
-*/
+
 
     //Amb aquesta variable booleana sabem si tenim algun taulell en construcció o no
     static boolean taulellEnConstruccio = false;
@@ -25,7 +25,7 @@ public class ConstructorTaulell{
     String missatgeNoHiHaTaulell = "No hi ha cap taulell. Considereu les opcions NOU o CARREGA";
 
     //Aquesta llista representa totes les comandes disponibles
-    static String[] llistaComandes = {"AJUDA","AFEGEIX","CARREGA","ELIMINA","GUARDA","LLISTA","NOU","MOSTRA","OBLIDA"}; 
+    static String[] llistaComandes = {"AJUDA","AFEGEIX","CARREGA","ELIMINA","GUARDA","LLISTA","NOU","MOSTRA","OBLIDA","SURT"}; 
 
 
     //main
@@ -47,7 +47,7 @@ public class ConstructorTaulell{
 
         //si l'entrada és vàlida llavors és processarà amb la funció gestorComanda
 
-        // TODO gestorComanda(comanda)
+        gestorComanda(comanda);
         
     }
 
@@ -69,43 +69,54 @@ public class ConstructorTaulell{
             }
            }
 
-        //Finalment, comrpovem que l'usuari no vulgui sortir:
-        if(comanda.equals("SURT")){
-            System.exit(0);
-        }
-
-        // si no s'ha trobat i no s'ha sortit, s'executa aquesta part del codi, es torna el false ja que la comanda no existeix.
+        // si no s'ha trobat, s'executa aquesta part del codi, es torna el false ja que la comanda no existeix.
         System.out.println("Comanda desconeguda");
-        return false;
+        return trobat;
 
         }
 
 
         public static void gestorComanda(String comanda){
 
+            // Si l'entrada és vàlida la convertim en majúscules
+            comanda = comanda.toUpperCase();
+
         switch(comanda){
             case "AJUDA":
+                break;
 
             case "AFEGEIX":
+                break;
 
             case "CARREGA":
+                break;
 
             case "ELIMINA":
+                break;
 
             case "GUARDA":
+                break;
 
             case "LLISTA":
+                break;
 
             case "NOU":
-                ComandaNou.nou();
+                nou();
+                break;
 
             case "MOSTRA":
+                break;
 
             case "OBLIDA":
+                break;
+            
+            case "SURT";
+                surt();
+                break;
             
 
             // en principi el default no s'executarà mai. Podriem tancar el programa si s'executa aquest codi.
-            default: System.out.println("Comanda desconeguda");
+            default: System.out.println("Comanda desconeguda, estem al final del switch");
         }
     }
 
@@ -223,19 +234,129 @@ public class ConstructorTaulell{
         // es vol veure la llista dels taulells guardats
         // Aquesta opció és vàlida amb i sense taulell en construcció.
         // El programa mostra la llista dels noms dels taulells guardats.
+        // Si no n’hi ha cap, ho indica amb el missatge Cap vaixell guardat.
 
 
     }
-    public static void nou{
 
-    }
     public static void mostra{
+        // és vol veure el contingut del taulell en construcció.
+        //Aquesta opció només és vàlida quan hi ha un taulell en construcció. 
+        //Altrament es mostra el missatge No hi ha cap taulell. 
+        //Considereu les opcions NOU o CARREGA.
 
-    }
+        if(! taulellEnConstruccio){
+            System.out.println(missatgeNoHiHaTaulell);
+        }
+
+        else{
+            // el programa mostrarà una representació del taulell. 
+            // Malgrat el taulell pot arribar a ser molt gran per ser representat 
+            // en una pantalla amb comoditat, en aquesta primera versió del programa 7
+            // no s’exigeix gestionar paginació
+         }
+             
+     }
+    
     public static void oblida{
+        // es vol ignorar el taulell en construcció sense guardar cap canvi.
+        // Aquesta opció només és vàlida quan hi ha un taulell en construcció. 
+        // Altrament es mostra el missatge No hi ha cap taulell. 
+        // Considereu les opcions NOU o CARREGA.
+
+        if(! taulellEnConstruccio){
+            System.out.println(missatgeNoHiHaTaulell);
+        }
+
+        else{
+            // En cas que sí hi hagi, el taulell en construcció és oblidat 
+            // i es deixa de tenir taulell de construcció. En aquest cas, 
+            // el programa confirmarà amb l’habitual missatge Fet!.
+        
+        }
 
     }
 */
+    public static void surt{
+
+        if (! taulellEnConstruccio){
+            System.out.println("Fet!");
+            System.exit(0);
+        }
+        else{
+
+        }
+    }
+
+
+    public static boolean dimensionsValida(int valor) {
+        if ((valor < TAMANY_MINIM_FILES || valor > TAMANY_MAXIM_FILES) || (valor < TAMANY_MINIM_COLUMNES || valor > TAMANY_MAXIM_COLUMNES)) {
+            System.out.println("Cal un enter entre 1 i 99");
+            return false;
+        
+        }else{
+        
+            return true;
+        }             
+    }
+
+    public static void nou() {
+        //TODO si hi ha un vaixell considerar la opció GUARAD o OBLIDA
+        //TODO constantes locales pendiente de mirar si pueden aprovechar las del ConstructorTaulel
+        /*final static int TAMANY_MAXIM_FILES = 99;
+        final static int TAMANY_MAXIM_COLUMNES = 99;
+    
+        final static int TAMANY_MINIM_FILES= 1;
+        final static int TAMANY_MINIM_COLUMNES= 1;*/    
+    
+        int filesEnter, columnaEnter;
+
+        try{
+        //entrada estandar
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+        
+        if (! taulellEnConstruccio) {
+        
+            //demanem numero de columnes del taulell
+            System.out.println("Introdueix número de files del taulell:");
+            
+            //pendiente control de flujo de entrada
+            //suponemos que recibimos siempre digitos        
+            do {
+                String files = entrada.readLine();
+                filesEnter = Integer.parseInt(files);
+            
+            } while (! dimensionsValida(filesEnter));
+                
+            //demanem numero de files del taulell
+            System.out.println("Introdueix número de columnes del taulell:");
+            
+            do {
+                String columna = entrada.readLine();
+                columnaEnter = Integer.parseInt(columna);
+            
+            } while (! dimensionsValida(columnaEnter));
+        
+        //cas en el que existeix un taulell 
+        } else {
+            //TODO
+            System.out.println("Ja hi ha un taulell. Considereu les opcions GUARDA o OBLIDA");
+            String comanda;
+            String[] llistaComandes = {"GUARDA","OBLIDA"};
+            
+            do {                
+                comanda = entrada.readLine();            
+            } while (! ConstructorTaulell.comandaEsValida(comanda, llistaComandes));
+            
+            System.out.println("OK");
+        }     
+    }
+    
+    catch(IOException e){
+        System.out.println("error");
+        System.exit(0);
+    }
+}
 }
 
 
