@@ -1,8 +1,9 @@
 
-//Aquestes llibreries són necessaries per l'entrada de dades de l'usuari (BufferedReader)
+//Aquestes llibreries són necessaries per l'entrada de dades de l'usuari (BufferedReader i Scanner)
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 // import per al diccionari de les descripciones d'AJUDA
 import java.util.Hashtable;
@@ -47,6 +48,8 @@ public class ConstructorTaulell{
     static int columnaInicial;
     static int columnaFinal;
     static int longitudVaixell;
+
+    static int nombreVaixellsTaulell = 0;
 
     //main
     public static void main(String[] args) throws IOException{
@@ -117,15 +120,19 @@ public class ConstructorTaulell{
                 break;
 
             case "CARREGA":
+                carrega();
                 break;
 
             case "ELIMINA":
+                elimina();
                 break;
 
             case "GUARDA":
+                guarda();
                 break;
 
             case "LLISTA":
+                ComandaLlista.mostraFitxersCarpetaTaulells();
                 break;
 
             case "NOU":
@@ -209,7 +216,10 @@ public class ConstructorTaulell{
                 if(coordenadaValida(coordenadaVaixell)){
     
                     if(taulellCorrecteAmbNouVaixell(coordenadaVaixell)){ //TODO
-                        afegeixVaixell(coordenadaVaixell); //TODO
+                        afegeixVaixell(coordenadaVaixell);
+
+                        // Incrementem el comptador de vaixells
+                        nombreVaixellsTaulell++;
                         System.out.println("Fet!");
                     }
     
@@ -229,6 +239,8 @@ public class ConstructorTaulell{
         if(! formatCorrecte(coordenadaVaixell)){
             return false;
         }
+
+        obteCoordenadesVaixell(coordenadaVaixell);
         
         if(! nombresCorrectes(coordenadaVaixell)){
             return false;
@@ -270,7 +282,6 @@ public class ConstructorTaulell{
 
     public static boolean nombresCorrectes(String coordenadaVaixell){
 
-        obteCoordenadesVaixell(coordenadaVaixell);
 
         //Les coordenades han de ser-hi en el taulell
         if((filaInicial >= files) || (filaFinal >= files) || (columnaInicial >= columnes) || (columnaFinal >= columnes)){
@@ -333,10 +344,10 @@ public class ConstructorTaulell{
     }
 
     public static void afegeixVaixell(String coordenadaVaixell){
-        //TODO
+        //TODO da problemas con los ":"
         for(int i = 0; i < files ;i++){
             for(int j = 0; j < columnes ;j++){
-                if((i == filaInicial || i == filaFinal) && (j == columnaInicial || j == columnaFinal))
+                if((i >= filaInicial && i <= filaFinal) && (j >= columnaInicial && j <= columnaFinal))
                     taulell[i][j] = longitudVaixell;
                 }
             }
@@ -348,76 +359,113 @@ public class ConstructorTaulell{
         return true;
     }
 
-    // public static void carrega{
-    //     //es vol carregar un taulell guardat previament.
+    public static void carrega(){
+        //es vol carregar un taulell guardat previament.
+        //si ja hi ha un taulell apareix aquest missatge d'error. 
+        if( taulellEnConstruccio){
+            System.out.println("Ja hi ha un taulell. Considereu les opcions GUARDA o OBLIDA");
+        }
+        else{
+            // Si no hi ha cap vaixell en construcció, demana el nom d’un vaixell.
+            BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
 
-    //     //si ja hi ha un taulell apareix aquest missatge d'error. 
-    //     if( taulellEnConstruccio){
-    //         System.out.println("Ja hi ha un taulell. Considereu les opcions GUARDA o OBLIDA");
-    //     }
-    //     else{
-    //         TODO 
-    //         TODO Si no hi ha cap vaixell en construcció, demana el nom d’un vaixell.
+            String nomTaulell = entrada.readLine();
 
-    //         TODO Si el nom del taulell no està a la llista de vaixells disponibles, es mostra l’error Taulell desconegut. Considereu l'opció LLISTA.
 
-    //         TODO El nom del taulell correspon a un fitxer que conté les dades d’un taulell prèviament guardades per aquest programa.
+            // TODO Si el nom del taulell no està a la llista de vaixells disponibles, es mostra l’error Taulell desconegut. Considereu l'opció LLISTA.
+            
+            // TODO El nom del taulell correspon a un fitxer que conté les dades d’un taulell prèviament guardades per aquest programa.
+            // TODO Si el taulell és conegut, s’intenta carregar.
+            carregaTaulell(nomTaulell);
 
-    //         TODO Si el taulell és conegut, s’intenta carregar.
+            // TODO Si el contingut del taulell no és vàlid es mostra el missatge Contingut no vàlid. Això no hauria de passar amb els fitxers que hagi guardat aquesta aplicació, però ho comprovem per el fitxer ha estat alterat amb altres mitjans.
 
-    //         TODO Si el contingut del taulell no és vàlid es mostra el missatge Contingut no vàlid. Això no hauria de passar amb els fitxers que hagi guardat aquesta aplicació, però ho comprovem per el fitxer ha estat alterat amb altres mitjans.
+            // TODO Si el contingut és vàlid, el taulell és carregat i es mostra el missatge Fet!.
+        }
 
-    //         TODO Si el contingut és vàlid, el taulell és carregat i es mostra el missatge Fet!.
-    //     }
-
-    // }
-    // public static void elimina{
+    }
+    public static void elimina(){
     //     //es vol eliminar un vaixell del taulell.
 
     //     Si no hi ha cap taulell avisem
-    //     if(! taulellEnConstruccio){
-    //         System.out.println(missatgeNoHiHaTaulell);
-    //     }
+         if(! taulellEnConstruccio){
+            System.out.println(missatgeNoHiHaTaulell);
+         }
 
-    //     else{
-    //         descripció vaixell
-    //         TODO Si el vaixell està malament descrit, o no es troba al taulell es mostra el missatge d’error Vaixell no vàlid.
+         else{
+//         descripció vaixell
+            System.out.println("Introdueix el vaixell que vols eliminar: ");
+            try{
+                BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+                coordenadaVaixell = entrada.readLine();
+    
+                if(coordenadaValida(coordenadaVaixell)){
 
-    //         TODO Si el vaixell ha estat descrit correctament i es troba al taulell, llavors el programa l’elimina del taulell.
+                    // Si el vaixell ha estat descrit correctament i es troba al taulell, llavors el programa l’elimina del taulell.
+                    eliminaVaixell(coordenadaVaixell);
 
-    //         TODO En cas que tot hagi anat bé, el programa ho indicarà amb el missatge Fet!
-    //     }
+                    nombreVaixellsTaulell--;
 
-
-    // }
-    // public static void guarda{
-    //     es vol guardar el taulell en construcció
-
-    //     Si no hi ha cap taulell avisem
-    //     if(! taulellEnConstruccio){
-    //         System.out.println(missatgeNoHiHaTaulell);
-    //     }
-
-    //     else{
-    //         TODO Si hi ha un taulell en construcció, es demana un nom pel taulell.
-
-    //         TODO Si el nom del taulell existeix, es sobreescriu el seu contingut amb el del taulell actual. Atenció: això és una simplificació. Normalment hem de fer que els nostres programes demanin confirmació abans de realitzar accions que puguin fer perdre informació.
-
-    //         TODO Si el nom del taulell no existeix, es crea un de nou i s’hi guarda el contingut del taulell actual.
-
-    //         TODO  En cas que tot hagi anat bé, el programa ho indicarà amb el missatge Fet!.
-
-    //     }
-
-    // }
-    // public static void llista{
-    //     es vol veure la llista dels taulells guardats
-    //     Aquesta opció és vàlida amb i sense taulell en construcció.
-    //     El programa mostra la llista dels noms dels taulells guardats.
-    //     Si no n’hi ha cap, ho indica amb el missatge Cap vaixell guardat.
+                    System.out.println("Fet!");
+                    
+                }else{
+                    // Si el vaixell està malament descrit, o no es troba al taulell es mostra el missatge d’error Vaixell no vàlid.
+                    System.out.println("Vaixell no vàlid.");
+                }
+            }catch(IOException e){
+                System.out.println("Error");
+            }
 
 
-    // }
+          }
+
+
+    }
+
+    public static void eliminaVaixell(String coordenadesVaixell){
+
+        for(int i = 0; i < files ;i++){
+            for(int j = 0; j < columnes ;j++){
+                if((i >= filaInicial && i <= filaFinal) && (j >= columnaInicial && j <= columnaFinal))
+                    taulell[i][j] = 0;
+                }
+            }
+    }
+    public static void guarda(){
+        // es vol guardar el taulell en construcció
+        // Si no hi ha cap taulell avisem
+        if(! taulellEnConstruccio){
+            System.out.println(missatgeNoHiHaTaulell);
+        }
+        else if(nombreVaixellsTaulell == 0){
+            System.out.println("El taulell en construcció no té cap vaixell. Considereu AFEGEIX.");
+        }
+        else{
+            try{
+                // Si hi ha un taulell en construcció, es demana un nom pel taulell.
+                BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+
+                String nomTaulell = entrada.readLine();
+
+                guardaTaulell(nomTaulell);
+
+                // TODO Si el nom del taulell existeix, es sobreescriu el seu contingut amb el del taulell actual. Atenció: això és una simplificació. Normalment hem de fer que els nostres programes demanin confirmació abans de realitzar accions que puguin fer perdre informació.
+
+                // TODO Si el nom del taulell no existeix, es crea un de nou i s’hi guarda el contingut del taulell actual.
+
+                // En cas que tot hagi anat bé, el programa ho indicarà amb el missatge Fet!.
+                System.out.println("Fet!");
+            }catch(IOException ex){
+                System.out.println("Error");
+            }
+
+        }
+
+    }
+
+    public static void guardaTaulell(String nomTaulell){
+        //TODO me tengo que mirar como se manipulaban ficheros...
+    }
 
     public static void mostra(){
         // és vol veure el contingut del taulell en construcció.
@@ -465,18 +513,14 @@ public class ConstructorTaulell{
             System.exit(0);
         }
         else {
-            //subMenuComandes(guardaOblida); Versió avançada
+            subMenuComandes(guardaOblida);
         }
     }
 
     public static void nou() {
-        //TODO si hi ha un vaixell considerar la opció GUARAD o OBLIDA
+        //TODO si hi ha un vaixell considerar la opció GUARDA o OBLIDA
         //TODO constantes locales pendiente de mirar si pueden aprovechar las del ConstructorTaulel
-        /*final static int TAMANY_MAXIM_FILES = 99;
-        final static int TAMANY_MAXIM_COLUMNES = 99;
-    
-        final static int TAMANY_MINIM_FILES= 1;
-        final static int TAMANY_MINIM_COLUMNES= 1;*/    
+
     
         try{
         //entrada estandar
@@ -572,62 +616,46 @@ public class ConstructorTaulell{
     }
  }
 
-     // public static void subMenuComandes(String[] llistaComandesDisponibles){
+     public static void subMenuComandes(String[] llistaComandesDisponibles){
 
-    //         if(llistaComandesDisponibles[0] == "NOU"){
-    //             System.out.println("Ja hi ha un taulell. Considereu les opcions NOU o CARREGA");
-    //         }   
-    //         else{
-    //             System.out.println("Ja hi ha un taulell. Considereu les opcions GUARDA o OBLIDA");
-    //         }
+            if(llistaComandesDisponibles[0] == "NOU"){
+                System.out.println("Ja hi ha un taulell. Considereu les opcions NOU o CARREGA");
+            }   
+            else{
+                System.out.println("Ja hi ha un taulell. Considereu les opcions GUARDA o OBLIDA");
+            }
 
-    //         String comanda;
-    //         //String[] llistaComandes = {"GUARDA","OBLIDA"};
+            String comanda;
+            //String[] llistaComandes = {"GUARDA","OBLIDA"};
+
+            // Demanem l'entrada de la comanda continuament fins que introdueixi GUARDA o OBLIDA
+            do {
+                Scanner entrada = new Scanner(System.in);                
+                comanda = entrada.next();            
+            } while (! ConstructorTaulell.comandaEsValida(comanda, llistaComandesDisponibles));
             
+            // Convertim comanda a majúscules
+            comanda = comanda.toUpperCase();
 
-    //         // Demanem l'entrada de la comanda continuament fins que introdueixi GUARDA o OBLIDA
-    //         do {
-    //             Scanner entrada = new Scanner(System.in);                
-    //             comanda = entrada.next();            
-    //         } while (! ConstructorTaulell.comandaEsValida(comanda, llistaComandesDisponibles));
+            switch(comanda){
+
+            case "CARREGA":
+                break;
+
+            case "NOU":
+                nou();
+                break;
             
-    //         // Convertim comanda a majúscules
-    //         comanda = comanda.toUpperCase();
+            case "GUARDA":
+                guarda();
+                break;
 
+            case "OBLIDA":
+                oblida();
+                break;
 
-    //         switch(comanda){
-
-    //         case "CARREGA":
-    //             break;
-
-    //         case "NOU":
-    //             nou();
-    //             break;
-            
-    //         case "GUARDA":
-    //             break;
-
-    //         case "OBLIDA":
-    //             break;
-
-    //         }
-
-    //         /*
-    //         // Controlem el flux
-    //         if(comanda.equals("GUARDA")){
-    //             //TODO guarda();
-    //         }
-    //         else if(comanda.equals("OBLIDA")){
-    //             //TODO oblida();
-    //         }
-
-    //         else{
-    //             System.out.println("error");
-    //         }
-    //         */
-
-    //         //TODO
-    // }
+            }
+    }
 }
 
 

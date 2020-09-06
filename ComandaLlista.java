@@ -4,7 +4,10 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 
 public class ComandaLlista {
-    
+    //     es vol veure la llista dels taulells guardats
+    //     Aquesta opció és vàlida amb i sense taulell en construcció.
+    //     El programa mostra la llista dels noms dels taulells guardats.
+    //     Si no n’hi ha cap, ho indica amb el missatge Cap vaixell guardat.
     public static void mostraFitxersCarpetaTaulells() {
         //el enunciat indica que el directori s'anomenará taulells 
         File cwd = new File("taulells/");
