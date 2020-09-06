@@ -20,10 +20,10 @@ public class ComandaLlista {
                 if (! path.isFile()) {
                     continue; 
                 }          
-                //mostrem cada un dels taulells guardats com .taulell segons l'enunciatq
+                //mostrem cada un dels taulells guardats com .taulell segons l'enunciat
                 
                 if (path.getName().endsWith(".taulell")) {
-                    System.out.printf("" + path.getName() + "%n");
+                    System.out.printf(path.getName() + "%n");
                     
                 } 
             }
