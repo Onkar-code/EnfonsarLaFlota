@@ -11,12 +11,24 @@ public class ComandaAfegeix {
     public static void afegeix() {
         //si hay  un taulell en construcció, afegim
         if (! ConstructorTaulell.taulellEnConstruccio) {
+            
             //si no hi ha un taulell en construcció,  Nou o Carreguem             
-            ConstructorTaulell.subMenuComandes(nouCarrega);         
-            System.out.println("alex marica");            
+            //ConstructorTaulell.subMenuComandes(nouCarrega);         
+            System.out.println("No hi ha cap taulell. Considereu les opcions NOU o CARREGA."); 
+
         } else {
-            //TODO
-            System.out.println("afegeix, deberías de llamar a la función on afegueix els vaixells");                 
+
+            System.out.println("Introdueix el vaixell: ");
+            coordenadaVaixell = entrada.readLine();
+
+            if(coordenadaValida(coordenadaVaixell)){ //TODO
+
+                afegeixVaixell(coordenadaVaixell); //TODO
+                System.out.println("Fet!");
+
+            }else{
+                System.out.println("Vaixell no vàlid.");
+            }
         }    
     }
     public static void main(String[] args) throws IOException {
