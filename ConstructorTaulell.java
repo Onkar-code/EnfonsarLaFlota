@@ -369,19 +369,10 @@ public class ConstructorTaulell{
             try{
             // Si no hi ha cap vaixell en construcció, demana el nom d’un vaixell.
             BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
-
             String nomTaulell = entrada.readLine();
 
+            taulell = Fitxers.carregaTaulell(nomTaulell);
 
-            // TODO Si el nom del taulell no està a la llista de vaixells disponibles, es mostra l’error Taulell desconegut. Considereu l'opció LLISTA.
-            
-            // TODO El nom del taulell correspon a un fitxer que conté les dades d’un taulell prèviament guardades per aquest programa.
-            // TODO Si el taulell és conegut, s’intenta carregar.
-            Fitxers.carregaTaulell(nomTaulell);
-
-            // TODO Si el contingut del taulell no és vàlid es mostra el missatge Contingut no vàlid. Això no hauria de passar amb els fitxers que hagi guardat aquesta aplicació, però ho comprovem per el fitxer ha estat alterat amb altres mitjans.
-
-            // TODO Si el contingut és vàlid, el taulell és carregat i es mostra el missatge Fet!.
             }catch(IOException ex){
                 System.out.println("Error");
             }
@@ -419,11 +410,7 @@ public class ConstructorTaulell{
             }catch(IOException e){
                 System.out.println("Error");
             }
-
-
           }
-
-
     }
 
     public static void eliminaVaixell(String coordenadesVaixell){
@@ -453,10 +440,6 @@ public class ConstructorTaulell{
 
                 // Guardem el taulell passant com a parametres el nom i el taulell actual.
                 Fitxers.guardaTaulell(nomTaulell, taulell);
-
-                // TODO Si el nom del taulell existeix, es sobreescriu el seu contingut amb el del taulell actual. Atenció: això és una simplificació. Normalment hem de fer que els nostres programes demanin confirmació abans de realitzar accions que puguin fer perdre informació.
-
-                // TODO Si el nom del taulell no existeix, es crea un de nou i s’hi guarda el contingut del taulell actual.
 
                 // En cas que tot hagi anat bé, el programa ho indicarà amb el missatge Fet!.
                 System.out.println("Fet!");

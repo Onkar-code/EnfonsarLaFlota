@@ -26,7 +26,7 @@ public class prova {
         /*
         Recorrem tots els fitxers del directori /taulell i comparem amb el nom passat per paràmetre
         */
-        File cwd = new File("/taulells");
+        File cwd = new File("taulells/");
         File[] paths = cwd.listFiles();
         for (File path: paths) {
             if(path.exists()){
@@ -42,3 +42,4 @@ public class prova {
         return false;
     }
 }
+

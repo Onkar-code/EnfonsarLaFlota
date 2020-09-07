@@ -44,7 +44,11 @@ public class Fitxers {
 
     public static void guardaTaulell(String nomTaulell, int[][] taulell) throws IOException{
         //TODO
-        String path = "taulells/" + nomTaulell;
+
+        // sempre guardarem i compararem en minúscules
+        nomTaulell = nomTaulell.toLowerCase();
+
+        String path = "taulells/" + nomTaulell + ".taulell";
 
         ArrayList<String> taulellString = taulellToArrayString(taulell);
 
@@ -55,6 +59,7 @@ public class Fitxers {
         }else{
             // Ara mateix el control de fluxe no té sentit perquè el true no té efecte, està per si en un futur
             // es vol millor la funcionalitat
+            // Si el nom del taulell no existeix, es crea un de nou i s’hi guarda el contingut del taulell actual.
             escriuFitxerDeText(path, taulellString, true);
         }
     }
@@ -74,29 +79,78 @@ public class Fitxers {
         return taulellString;
     }
 
+    public static int[][] taulellArrayStringToInt(ArrayList<String> taulellString){
+        //TODO
+        int[][] taulell = new int[taulellString.size()][taulellString.get(0).length()];
+
+        for(int i = 0; i < taulellString.size() ;i++){
+            for(int j = 0; j < taulellString.get(i).length() ;j++){
+                taulell[i][j] = Integer.parseInt(taulellString.get(i)[j]);
+            }
+        }
+
+        return taulell;
+    }
+
     public static boolean fitxerExisteix(String nomTaulell){
         /*
         Recorrem tots els fitxers del directori /taulell i comparem amb el nom passat per paràmetre
         */
 
-        File cwd = new File("/taulells");
+        File cwd = new File("taulells/");
         File[] paths = cwd.listFiles();
         for (File path: paths) {
             if (! path.isFile()) {
                 continue;   // no és un fitxer regular
             }
-            if (path.getName() == nomTaulell) {
+            if (path.getName().equals(nomTaulell + ".taulell")) {
                 return true;
             }
         }
         return false;
-
     }
 
-    public static void carregaTaulell(String nomTaulell){
-        //TODO me tengo que mirar como se manipulaban ficheros...
+    public static int[][] carregaTaulell(String nomTaulell) throws IOException{
+
+        // Taulell de sortida incorrecta
+        int[][] taulellNull = null;
+        // Taulell de sortida correcta
+        int[][] taulell = null;
+
+        // Comprovem l'extensió
+        if( ! nomTaulell.endsWith(".taulell")){
+            nomTaulell = nomTaulell + ".taulell";
+        }
+    
+        //Si el nom del taulell no està a la llista de vaixells disponibles, es mostra error
+        if(fitxerExisteix(nomTaulell)){
+            // El nom del taulell correspon a un fitxer que conté les dades d’un taulell prèviament guardades per aquest programa.
+            // Si el taulell és conegut, s’intenta carregar.
+            String path = "taulell/" + nomTaulell;
+            ArrayList<String> taulellArrayString = llegeixFitxerDeText(path);
+
+            taulell = taulellArrayStringToInt(taulellArrayString);
+
+            // TODO Si el contingut del taulell no és vàlid es mostra el missatge Contingut no vàlid. Això no hauria de passar amb els fitxers que hagi guardat aquesta aplicació, però ho comprovem per el fitxer ha estat alterat amb altres mitjans.
+            if(! taulellCorrecte(taulell)){
+                System.out.println("Contingut no vàlid.");
+            }else{
+                // Si el contingut és vàlid, el taulell és carregat i es mostra el missatge Fet!.
+                System.out.println("Fet!");
+                return taulell;
+            }
+        }
+        else{
+            System.out.println("Error: Taulell desconegut. Considereu l'opció LLISTA.");
+        }
+        return taulellNull;
     }
 
+    public static boolean taulellCorrecte(int[][] taulell){
+        //TODO
+        return true;
+    }
+    
     /* Donat el camí a un fitxer i una seqüència de línies de text, escriu les
      * línies de text al fitxer indicat.
      * El booleà amplia permet indicar:
@@ -130,9 +184,5 @@ public class Fitxers {
         }
         bufferedReader.close();
         return linies;
-    }
-    
-    // public static void main(String[] args) throws IOException {            
-    //     mostraFitxersCarpetaTaulells();
-    // }        
+    }     
 }
