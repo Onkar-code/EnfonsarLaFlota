@@ -132,7 +132,7 @@ public class ConstructorTaulell{
                 break;
 
             case "LLISTA":
-                ComandaLlista.mostraFitxersCarpetaTaulells();
+                Fitxers.mostraFitxersCarpetaTaulells();
                 break;
 
             case "NOU":
@@ -366,6 +366,7 @@ public class ConstructorTaulell{
             System.out.println("Ja hi ha un taulell. Considereu les opcions GUARDA o OBLIDA");
         }
         else{
+            try{
             // Si no hi ha cap vaixell en construcció, demana el nom d’un vaixell.
             BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
 
@@ -376,11 +377,14 @@ public class ConstructorTaulell{
             
             // TODO El nom del taulell correspon a un fitxer que conté les dades d’un taulell prèviament guardades per aquest programa.
             // TODO Si el taulell és conegut, s’intenta carregar.
-            carregaTaulell(nomTaulell);
+            Fitxers.carregaTaulell(nomTaulell);
 
             // TODO Si el contingut del taulell no és vàlid es mostra el missatge Contingut no vàlid. Això no hauria de passar amb els fitxers que hagi guardat aquesta aplicació, però ho comprovem per el fitxer ha estat alterat amb altres mitjans.
 
             // TODO Si el contingut és vàlid, el taulell és carregat i es mostra el missatge Fet!.
+            }catch(IOException ex){
+                System.out.println("Error");
+            }
         }
 
     }
@@ -443,11 +447,12 @@ public class ConstructorTaulell{
         else{
             try{
                 // Si hi ha un taulell en construcció, es demana un nom pel taulell.
+                System.out.println("Nom del taulell? ");
                 BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
-
                 String nomTaulell = entrada.readLine();
 
-                guardaTaulell(nomTaulell);
+                // Guardem el taulell passant com a parametres el nom i el taulell actual.
+                Fitxers.guardaTaulell(nomTaulell, taulell);
 
                 // TODO Si el nom del taulell existeix, es sobreescriu el seu contingut amb el del taulell actual. Atenció: això és una simplificació. Normalment hem de fer que els nostres programes demanin confirmació abans de realitzar accions que puguin fer perdre informació.
 
@@ -458,14 +463,9 @@ public class ConstructorTaulell{
             }catch(IOException ex){
                 System.out.println("Error");
             }
-
         }
-
     }
 
-    public static void guardaTaulell(String nomTaulell){
-        //TODO me tengo que mirar como se manipulaban ficheros...
-    }
 
     public static void mostra(){
         // és vol veure el contingut del taulell en construcció.
@@ -481,10 +481,8 @@ public class ConstructorTaulell{
             // Malgrat el taulell pot arribar a ser molt gran per ser representat 
             // en una pantalla amb comoditat, en aquesta primera versió del programa
             // no s’exigeix gestionar paginació
-
             mostraTaulell();
          }
-             
      }
     
     public static void oblida(){
@@ -592,7 +590,6 @@ public class ConstructorTaulell{
  }
 
  public static void mostraTaulell(){
-    
     // Crearem el taulell que és una matriu de strings a partir del taulell numeric
     String[][] taulellString = new String[files][columnes];
 
