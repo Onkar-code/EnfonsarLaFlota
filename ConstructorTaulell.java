@@ -368,13 +368,18 @@ public class ConstructorTaulell{
         else{
             try{
             // Si no hi ha cap vaixell en construcció, demana el nom d’un vaixell.
+            System.out.println("Nom taulell? ");
             BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
             String nomTaulell = entrada.readLine();
 
             taulell = Fitxers.carregaTaulell(nomTaulell);
 
+            if(taulell != null){
+                taulellEnConstruccio = true;
+            }
+
             }catch(IOException ex){
-                System.out.println("Error");
+                System.out.println("Error: " + ex.getMessage());
             }
         }
 

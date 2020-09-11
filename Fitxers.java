@@ -79,17 +79,47 @@ public class Fitxers {
         return taulellString;
     }
 
-    public static int[][] taulellArrayStringToInt(ArrayList<String> taulellString){
-        //TODO
-        int[][] taulell = new int[taulellString.size()][taulellString.get(0).length()];
+    public static int[][] taulellArraySListtringToInt(ArrayList<String> taulellString){
+        
+        ArrayList<Integer> taulellInt = taulellArrayListStringToArrayListInt(taulellString);
+        
+        // taulell de sortida
+        int[][] taulell = new int[taulellInt.size()][taulellInt.get(0).length()];
 
-        for(int i = 0; i < taulellString.size() ;i++){
-            for(int j = 0; j < taulellString.get(i).length() ;j++){
-                taulell[i][j] = Integer.parseInt(taulellString.get(i)[j]);
+        for(int i = 0;i < taulell.length;i++){
+            for(int j = 0;j < taulell[i].length;j++){
+                taulell[i][j] = taulellInt.get(i)[j];
             }
         }
 
         return taulell;
+    }
+
+    public static ArrayList<Integer> taulellArrayListStringToArrayListInt(ArrayList<String> taulellString){
+        //TODO
+        ArrayList<Integer> taulellInt = new ArrayList<Integer>();
+        
+        for(String linia: taulellString){
+            taulellInt.add(Integer.parseInt(linia));
+        }
+
+        return taulellInt;
+        
+        int[][] taulell = new int[taulellString.size()][taulellString.get(0).length()];
+
+        // for(String linia: taulellString){
+        //     int i = 0;
+        //     for(int j = 0; j < linia.length();j++){
+        //         taulell[i][j] = Integer.parseInt(String.valueOf(linia.charAt(j)));
+        //     }
+        //     i++;
+        // }
+        for(int i = 0; i < taulellString.size() ;i++){
+            for(int j = 0; j < taulellString.get(i).length() ;j++){
+                taulell[i][j] = Integer.parseInt(String.valueof(taulellString.get.charAt(j)));
+            }
+        }
+
     }
 
     public static boolean fitxerExisteix(String nomTaulell){
@@ -103,7 +133,7 @@ public class Fitxers {
             if (! path.isFile()) {
                 continue;   // no és un fitxer regular
             }
-            if (path.getName().equals(nomTaulell + ".taulell")) {
+            if (path.getName().equals(nomTaulell)) {
                 return true;
             }
         }
@@ -112,10 +142,9 @@ public class Fitxers {
 
     public static int[][] carregaTaulell(String nomTaulell) throws IOException{
 
-        // Taulell de sortida incorrecta
-        int[][] taulellNull = null;
-        // Taulell de sortida correcta
-        int[][] taulell = null;
+        // Taulell de sortida
+        int[][] taulell;
+        ArrayList<Integer> taulellArray = new ArrayList<Integer>();
 
         // Comprovem l'extensió
         if( ! nomTaulell.endsWith(".taulell")){
@@ -126,10 +155,10 @@ public class Fitxers {
         if(fitxerExisteix(nomTaulell)){
             // El nom del taulell correspon a un fitxer que conté les dades d’un taulell prèviament guardades per aquest programa.
             // Si el taulell és conegut, s’intenta carregar.
-            String path = "taulell/" + nomTaulell;
+            String path = "taulells/" + nomTaulell;
             ArrayList<String> taulellArrayString = llegeixFitxerDeText(path);
 
-            taulell = taulellArrayStringToInt(taulellArrayString);
+            taulell = taulellArraySListtringToInt(taulellArrayString);
 
             // TODO Si el contingut del taulell no és vàlid es mostra el missatge Contingut no vàlid. Això no hauria de passar amb els fitxers que hagi guardat aquesta aplicació, però ho comprovem per el fitxer ha estat alterat amb altres mitjans.
             if(! taulellCorrecte(taulell)){
@@ -143,7 +172,6 @@ public class Fitxers {
         else{
             System.out.println("Error: Taulell desconegut. Considereu l'opció LLISTA.");
         }
-        return taulellNull;
     }
 
     public static boolean taulellCorrecte(int[][] taulell){
