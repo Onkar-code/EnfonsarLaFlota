@@ -1,11 +1,19 @@
+import java.util.Arrays;
+
 public class TaulellJoc {
+    public static int[][] creaTaulell(int [][] taulellOriginal){
+
+        int[][] copy = Arrays.stream(taulellOriginal).map(int[]::clone).toArray(int[][]::new);
+
+        return copy;
+    }
     public static void mostraTaulell(int[][] taulell){
 
         int files = ConstructorTaulell.obteFilesTaulell(taulell);
         int columnes = ConstructorTaulell.obteColumnesTaulell(taulell);
 
         // Crearem el taulell que és una matriu de strings a partir del taulell numeric
-        String[][] taulellString = new String[taulell.length][columnes];
+        String[][] taulellString = new String[files][columnes];
     
         for(int i = 0; i < files ;i++){
             for(int j = 0; j < columnes ;j++){
