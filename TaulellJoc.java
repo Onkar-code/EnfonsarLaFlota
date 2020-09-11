@@ -122,5 +122,10 @@ public class TaulellJoc {
             }
             System.out.println();
         }
+
+        // Sortim del joc
+        System.out.println("\nJo guanyo!");
+        System.exit(0);
+        
     }
 }

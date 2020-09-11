@@ -4,6 +4,8 @@ import java.io.InputStreamReader;
 
 // implementació del joc
 public class Flota{
+    static String nomTaulell;
+    static Boolean fitxerTrobat;
     static int[][] taulellOriginal;
     static int[][] taulell;
     static Boolean[][] taulellBoolea;
@@ -20,10 +22,19 @@ public class Flota{
         El programa valida que el contingut del fitxer sigui correcte. De no ser-ho, finalitza execució amb un missatge d’error.
         */
         System.out.println("Benvingut a Enfonsar la flota \nAra hi ets al Joc principal.");
+
+        do{
         System.out.println("Introdueix el nom del taulell que vols carregar: ");
         BufferedReader entradaTaulell = new BufferedReader(new InputStreamReader(System.in));
-        String nomTaulell = entradaTaulell.readLine();
+        nomTaulell = entradaTaulell.readLine().toLowerCase();
+
+        fitxerTrobat = Fitxers.fitxerExisteix(nomTaulell);
         
+        if(! fitxerTrobat){
+            System.out.println("Fitxer no trobat.");
+            continue;
+        }
+
         taulellOriginal = Fitxers.carregaTaulell(nomTaulell);
 
         if(taulellOriginal != null){
@@ -31,6 +42,7 @@ public class Flota{
             taulellBoolea = TaulellJoc.creaTaulellBoolea(taulellOriginal);
             TaulellJoc.mostraTaulell(taulell, taulellBoolea);
         }
+        }while(! fitxerTrobat);
        
         String comanda;
 
@@ -43,6 +55,10 @@ public class Flota{
             comanda = entrada.readLine();       // llegim una línia de text
 
             //si l'entrada és vàlida llavors és processarà amb la funció gestorComanda
+            /*
+            D’estar tot correcte, el programa mostra el mapa del taulell on, inicialment totes les cel·les apareixen amb el valor ocult sota un símbol d’interrogació.
+            Com a ajuda, al voltant dels valors del taulell, apareixeran els noms de la fila/la columna corresponent.
+            */
             if(ConstructorTaulell.comandaEsValida(comanda, llistaComandes)){
                 gestorComanda(comanda);
             }else{
@@ -52,16 +68,9 @@ public class Flota{
         }
         while (! comanda.toUpperCase().equals("SURT"));
 
-
-        /*
-        D’estar tot correcte, el programa mostra el mapa del taulell on, inicialment totes les cel·les apareixen amb el valor ocult sota un símbol d’interrogació.
-        Com a ajuda, al voltant dels valors del taulell, apareixeran els noms de la fila/la columna corresponent.
-        */
-        TaulellJoc.mostraTaulell(taulellBoolea);
-        //TaulellJoc.mostraTaulell();
     }
 
-        public static void gestorComanda(String comanda){
+    public static void gestorComanda(String comanda){
 
         // Si l'entrada és vàlida la convertim en majúscules
         comanda = comanda.toUpperCase();
@@ -76,7 +85,7 @@ public class Flota{
                 break;
 
             case "JUGA":
-                TaulellJoc.juga();
+                juga();
                 break;
             
             case "SURT":
@@ -86,5 +95,27 @@ public class Flota{
             // en principi el default no s'executarà mai. Podriem tancar el programa si s'executa aquest codi.
             default: System.out.println("Comanda desconeguda, estem al final del switch");
         }
+    }
+
+    public static void juga(){
+        System.out.println("Introdueix el vaixell: ");
+            try{
+                BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+                String coordenadaVaixell = entrada.readLine();
+    
+                if(ConstructorTaulell.coordenadaValida(coordenadaVaixell)){
+    
+                    if(ConstructorTaulell.taulellCorrecteAmbNouVaixell(coordenadaVaixell)){ //TODO
+
+                        System.out.println("Fet!");
+                    }
+    
+                }else{
+                    //  Si el vaixell està malament descrit, o no pot ser col·locat al lloc indicat perquè no hi cap o bé perquè toca un altre vaixell, es mostra el missatge d’error Vaixell no vàlid.
+                    System.out.println("Vaixell no vàlid.");
+                }
+            }catch(IOException e){
+                System.out.println("Error");
+            }
     }
 }

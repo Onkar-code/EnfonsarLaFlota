@@ -125,10 +125,14 @@ public class Fitxers {
     // }
 
     public static boolean fitxerExisteix(String nomTaulell){
+        // Comprovem l'extensió
+        if( ! nomTaulell.endsWith(".taulell")){
+            nomTaulell = nomTaulell + ".taulell";
+        }
+
         /*
         Recorrem tots els fitxers del directori /taulell i comparem amb el nom passat per paràmetre
         */
-
         File cwd = new File("taulells/");
         File[] paths = cwd.listFiles();
         for (File path: paths) {
