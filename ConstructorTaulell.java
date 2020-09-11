@@ -371,11 +371,13 @@ public class ConstructorTaulell{
             System.out.println("Nom taulell? ");
             BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
             String nomTaulell = entrada.readLine();
-
+            
             taulell = Fitxers.carregaTaulell(nomTaulell);
 
             if(taulell != null){
                 taulellEnConstruccio = true;
+                files = obteFilesTaulell(taulell);
+                columnes = obteColumnesTaulell(taulell);
             }
 
             }catch(IOException ex){
@@ -384,6 +386,15 @@ public class ConstructorTaulell{
         }
 
     }
+
+    public static int obteFilesTaulell(int[][] matriu){
+        return matriu.length;
+    }
+
+    public static int obteColumnesTaulell(int[][] matriu){
+        return matriu[0].length;
+    }
+
     public static void elimina(){
     //     //es vol eliminar un vaixell del taulell.
 

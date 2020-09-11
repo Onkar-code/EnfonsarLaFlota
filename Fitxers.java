@@ -81,46 +81,48 @@ public class Fitxers {
 
     public static int[][] taulellArraySListtringToInt(ArrayList<String> taulellString){
         
-        ArrayList<Integer> taulellInt = taulellArrayListStringToArrayListInt(taulellString);
+        //ArrayList<Integer> taulellInt = taulellArrayListStringToArrayListInt(taulellString);
         
         // taulell de sortida
-        int[][] taulell = new int[taulellInt.size()][taulellInt.get(0).length()];
+        //int[][] taulell = new int[taulellInt.size()][taulellInt.get(0).length()];
+        int[][] taulell = new int[taulellString.size()][taulellString.get(0).length()];
+
 
         for(int i = 0;i < taulell.length;i++){
             for(int j = 0;j < taulell[i].length;j++){
-                taulell[i][j] = taulellInt.get(i)[j];
+                taulell[i][j] = Integer.parseInt(String.valueOf(taulellString.get(i).charAt(j)));
             }
         }
 
         return taulell;
     }
 
-    public static ArrayList<Integer> taulellArrayListStringToArrayListInt(ArrayList<String> taulellString){
-        //TODO
-        ArrayList<Integer> taulellInt = new ArrayList<Integer>();
+    // public static ArrayList<Integer> taulellArrayListStringToArrayListInt(ArrayList<String> taulellString){
+    //     //TODO
+    //     ArrayList<Integer> taulellInt = new ArrayList<Integer>();
         
-        for(String linia: taulellString){
-            taulellInt.add(Integer.parseInt(linia));
-        }
+    //     for(String linia: taulellString){
+    //         taulellInt.add(Integer.parseInt(linia));
+    //     }
 
-        return taulellInt;
+    //     return taulellInt;
         
-        int[][] taulell = new int[taulellString.size()][taulellString.get(0).length()];
+    //     int[][] taulell = new int[taulellString.size()][taulellString.get(0).length()];
 
-        // for(String linia: taulellString){
-        //     int i = 0;
-        //     for(int j = 0; j < linia.length();j++){
-        //         taulell[i][j] = Integer.parseInt(String.valueOf(linia.charAt(j)));
-        //     }
-        //     i++;
-        // }
-        for(int i = 0; i < taulellString.size() ;i++){
-            for(int j = 0; j < taulellString.get(i).length() ;j++){
-                taulell[i][j] = Integer.parseInt(String.valueof(taulellString.get.charAt(j)));
-            }
-        }
+    //     // for(String linia: taulellString){
+    //     //     int i = 0;
+    //     //     for(int j = 0; j < linia.length();j++){
+    //     //         taulell[i][j] = Integer.parseInt(String.valueOf(linia.charAt(j)));
+    //     //     }
+    //     //     i++;
+    //     // }
+    //     for(int i = 0; i < taulellString.size() ;i++){
+    //         for(int j = 0; j < taulellString.get(i).length() ;j++){
+    //             taulell[i][j] = Integer.parseInt(String.valueof(taulellString.get.charAt(j)));
+    //         }
+    //     }
 
-    }
+    // }
 
     public static boolean fitxerExisteix(String nomTaulell){
         /*
@@ -172,6 +174,8 @@ public class Fitxers {
         else{
             System.out.println("Error: Taulell desconegut. Considereu l'opció LLISTA.");
         }
+        taulell = null;
+        return taulell;
     }
 
     public static boolean taulellCorrecte(int[][] taulell){
