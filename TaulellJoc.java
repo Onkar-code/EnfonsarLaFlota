@@ -17,5 +17,13 @@ public class TaulellJoc {
                 }
             }
         }
-    }   
+
+        // El mostrem per pantalla
+        for(int i = 0; i < files ;i++){
+            for(int j = 0; j < columnes ;j++){
+                System.out.print(taulell[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
 }
