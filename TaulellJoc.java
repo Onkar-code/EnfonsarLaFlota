@@ -51,6 +51,22 @@ public class TaulellJoc {
 
     }
 
+    public static boolean coordenadaAigua(int[] coordenadesVaixell,int[][] taulell){
+        boolean aigua = false;
+
+        if(taulell[coordenadesVaixell[0]][coordenadesVaixell[1]] == 0){
+            // El valor 0 és el corresponent a l'aigua.
+            aigua = true;
+        }
+
+        return aigua;
+    }
+
+    public static void modificaTaulell(int[] coordenadesVaixell, Boolean[][] taulellBoolea){
+        // Modifiquem el taulell boolea perquè l'usuari ha insserit aquestes coordenades.
+        taulellBoolea[coordenadesVaixell[0]][coordenadesVaixell[1]] =  true;
+    }
+
     public static void mostraTaulell(int[][] taulell, Boolean[][] taulellBoolea){
 
         int files = ConstructorTaulell.obteFilesTaulell(taulell);
@@ -97,21 +113,50 @@ public class TaulellJoc {
         }
     }
 
-    public static boolean coordenadaValida(String entradaVaixell){
-        if(! ConstructorTaulell.formatCorrecte(entradaVaixell)){
-            System.out.println("1");
+    // public static boolean coordenadaValida(String entradaVaixell){
+    //     if(! ConstructorTaulell.formatCorrecte(entradaVaixell)){
+    //         return false;
+    //     }
+        
+    //     // if(! nombresCorrectes(coordenadaVaixell)){
+    //     //     return false;
+    //     // }
+
+    //     return true;
+    // }
+
+    public static boolean formatCorrecte(String coordenadaVaixell){
+        // Comprobem la longitud. No pot ser 0 ni més gran que 12 per a un taulell 99x99 ( 90:99, 90) 
+        if(coordenadaVaixell.length() < 1 || coordenadaVaixell.length() > 12){
             return false;
         }
-        
-        // if(! nombresCorrectes(coordenadaVaixell)){
-        //     return false;
-        // }
 
+        // Ha de contindre "," i "( )"
+        if((! coordenadaVaixell.contains(",")) || (! coordenadaVaixell.contains("(")) || (! coordenadaVaixell.contains(")"))){
+            return false;
+        }
+
+        // No pot contenir cap ":"  i exactament s'ha de tenir 1 coma
+        int quantitatDosPunts = 0;
+        int quantitatComes = 0;
+        char[]coordenadaVaixellCharArray = coordenadaVaixell.toCharArray();
+        for( char caracter : coordenadaVaixellCharArray){
+            if(caracter == ':'){
+                quantitatDosPunts++;
+            }
+            if(caracter == ','){
+                quantitatComes++;
+            }
+        }
+
+        if(quantitatDosPunts > 0 || quantitatComes != 1){
+            return false;
+        }
         return true;
     }
 
-    public static int[][] obteCoordenadesVaixell(String coordenadaVaixell ){
-        // Es considera que coordenadaVaixell té coordenades vàlides.
+    public static int[] obteCoordenadesVaixell(String coordenadaVaixell ){
+        // Es considera que coordenadaVaixell té coordenades vàlides. Exemple format: (2,4)
 
         //Primer treiem els parèntesis i possibles espais
         coordenadaVaixell = coordenadaVaixell.trim();
@@ -120,31 +165,43 @@ public class TaulellJoc {
 
         // Obtenim les coordenades amb contains() i split()
         String[] coordenades = coordenadaVaixell.split(",");
-        String coordenadesFilaString = coordenades[0];
-        String coordenadesColumnaString = coordenades[1];
+        String coordenadaFilaString = coordenades[0];
+        String coordenadaColumnaString = coordenades[1];
 
         // Iniciatzem les coordenades de surtida a -1, són nombres no vàlids que s'hauran de comprovar posteriorment.
-        int[] coordenadaFila = {-1, -1};
-        int[] coordenadaColumna = {-1, -1};
-
-        // Comprovem els casos de dimensiones majors a 1
-        if(coordenadesFilaString.contains(":")){
-            String[] coordenadaFilaString = coordenadesFilaString.split(":");
-            coordenadaFila = Utility.StringArrayToIntArray(coordenadaFilaString);
-
-        }else if(coordenadesColumnaString.contains(":")){
-            String[] coordenadaColumnaString = coordenadesColumnaString.split(":");
-            coordenadaColumna = Utility.StringArrayToIntArray(coordenadaColumnaString);
-
-        }else{
-            coordenadaFila[0] = Integer.parseInt(coordenadesFilaString) ;
-            coordenadaColumna[0] = Integer.parseInt(coordenadesColumnaString);
-        }
+        int coordenadaFila = Integer.parseInt(coordenadaFilaString);
+        int coordenadaColumna = Integer.parseInt(coordenadaColumnaString);
     
         // Tornem la matriu de sortida amb les coordenades
-        int[][] sortida = {coordenadaFila, coordenadaColumna};
+        int[] sortida = {coordenadaFila, coordenadaColumna};
         return sortida;
     }
+    
+    public static boolean nombreFilesCorrecte(int valor, int files) {
+        if (valor >= files || valor < 0) {
+            return false;
+        }else{
+            return true;
+        }             
+     }
+
+     public static boolean nombreColumnesCorrecte(int valor, int columnes) {
+        if (valor >= columnes || valor < 0) {
+            return false;
+        }else{
+            return true;
+        }             
+     }
+
+     public static boolean coordenadesRepetides(int[] coordenadesVaixell,Boolean[][] taulellBoolea){
+        boolean repetit = false;
+
+        if(taulellBoolea[coordenadesVaixell[0]][coordenadesVaixell[1]] == true ){
+            repetit = true;
+        }
+
+        return repetit;
+     }
 
     public static void soluciona(int[][] taulell){
 
@@ -177,5 +234,161 @@ public class TaulellJoc {
         System.out.println("\nJo guanyo!");
         System.exit(0);
         
+    }
+
+    public static boolean coordenadesDintreTaulell(int[] coordenadesVaixell,int files, int columnes ){
+        boolean dintre = true;
+        for(int i = 0; i < coordenadesVaixell.length ;i++){
+
+                if(! (TaulellJoc.nombreFilesCorrecte(coordenadesVaixell[i], files) && TaulellJoc.nombreColumnesCorrecte(coordenadesVaixell[i], columnes))){
+                    dintre = false;
+                }
+        }
+
+        return dintre;
+    }
+
+    public static boolean vaixellEnfonsat(int[] coordenadesVaixell, int[][] taulell, Boolean[][] taulellBoolea){
+        boolean enfonsat = false;
+
+        // Primer contemplem el cas dels vaixells de tamany 1
+        if(taulell[coordenadesVaixell[0]][coordenadesVaixell[1]] == 1){
+            enfonsat = true;
+            return enfonsat;
+        }
+
+        if(esVaixellHoritzontal(coordenadesVaixell, taulell)){
+            // int[] posicioPrevia = {coordenadesVaixell[0], coordenadesVaixell[1] - 1};
+            // int[] posicioPosterior = {coordenadesVaixell[0], coordenadesVaixell[1] + 1};
+
+            if(esVaixellHoritzontalEnfonsat(coordenadesVaixell, taulell, taulellBoolea)){
+                enfonsat = true;
+            }
+
+        }else{ // Si no és horitzontal ni de tamany 1 per força és vertical
+            // int[] posicioPrevia = {coordenadesVaixell[0] - 1, coordenadesVaixell[1]};
+            // int[] posicioPosterior = {coordenadesVaixell[0] + 1, coordenadesVaixell[1]};
+
+            if(esVaixellVerticalEnfonsat(coordenadesVaixell, taulell, taulellBoolea)){
+                enfonsat = true;
+            }
+        }
+
+        return enfonsat;
+    }
+
+    public static boolean esVaixellHoritzontalEnfonsat(int[] coordenadesVaixell, int[][] taulell, Boolean[][] taulellBolea){
+        boolean enfonsat = false;
+
+        int fila = coordenadesVaixell[0];
+        int columna = coordenadesVaixell[1];
+
+        int tamanyVaixell = taulell[fila][columna];
+        int comptadorDanys = 0;
+
+        int danysDreta = comptaImpactesDreta(fila, columna, taulell, taulellBolea);
+        int danysEsquerra = comptaImpactesEsquerra(fila, columna, taulell, taulellBolea);
+
+        comptadorDanys = danysEsquerra + danysDreta - 1; //Restem 1 perquè començem pel mateix lloc en ambdues funcions.
+
+        if( comptadorDanys ==  tamanyVaixell){
+            enfonsat = true;
+        }
+
+        return enfonsat;
+        
+    }
+
+    public static boolean esVaixellVerticalEnfonsat(int[] coordenadesVaixell, int[][] taulell, Boolean[][] taulellBolea){
+        boolean enfonsat = false;
+
+        int fila = coordenadesVaixell[0];
+        int columna = coordenadesVaixell[1];
+
+        int tamanyVaixell = taulell[fila][columna];
+        int comptadorDanys = 0;
+
+        int danysDreta = comptaImpactesAdalt(fila, columna, taulell, taulellBolea);
+        int danysEsquerra = comptaImpactesAbaix(fila, columna, taulell, taulellBolea);
+
+        comptadorDanys = danysEsquerra + danysDreta - 1; //Restem 1 perquè començem pel mateix lloc en ambdues funcions.
+
+        if( comptadorDanys ==  tamanyVaixell){
+            enfonsat = true;
+        }
+
+        return enfonsat;
+        
+    }
+
+    public static int comptaImpactesDreta(int fila, int columna, int[][] taulell, Boolean[][] taulellBolea){
+        int impactes = 0;
+
+        for(int j = columna; j < taulell[fila].length ;j++){
+            if(taulellBolea[fila][j] == true && taulell[fila][j] > 1){
+                impactes++;
+            }else{
+                return impactes;
+            }
+        }
+
+        return impactes;
+    }
+
+    public static int comptaImpactesEsquerra(int fila, int columna, int[][] taulell, Boolean[][] taulellBolea){
+        int impactes = 0;
+
+        for(int j = columna; j > 0 ;j--){
+            if(taulellBolea[fila][j] == true && taulell[fila][j] > 1){
+                impactes++;
+            }else{
+                return impactes;
+            }
+        }
+
+        return impactes;
+    }
+
+    public static int comptaImpactesAbaix(int fila, int columna, int[][] taulell, Boolean[][] taulellBolea){
+        int impactes = 0;
+
+        for(int i = fila; i < taulell.length ;i++){
+            if(taulellBolea[i][fila] == true && taulell[i][fila] > 1){
+                impactes++;
+            }else{
+                return impactes;
+            }
+        }
+
+        return impactes;
+    }
+
+    public static int comptaImpactesAdalt(int fila, int columna, int[][] taulell, Boolean[][] taulellBolea){
+        int impactes = 0;
+
+        for(int i = fila; i > 0 ;i--){
+            if(taulellBolea[i][fila] == true && taulell[i][fila] > 1){
+                impactes++;
+            }else{
+                return impactes;
+            }
+        }
+
+        return impactes;
+    }
+
+    public static boolean esVaixellHoritzontal(int[] coordenadesVaixell, int[][] taulell){
+        boolean horitzontal = false;
+
+        int[] posicioPrevia = {coordenadesVaixell[0], coordenadesVaixell[1] - 1};
+        int[] posicioPosterior = {coordenadesVaixell[0], coordenadesVaixell[1] + 1};
+
+        try{
+            if(( taulell[posicioPrevia[0]][posicioPrevia[1]] != 0 ) || ( taulell[posicioPosterior[0]][posicioPosterior[1]] != 0 )){
+                horitzontal = true;
+            }    
+        }catch(ArrayIndexOutOfBoundsException ex){}
+
+        return horitzontal;
     }
 }
