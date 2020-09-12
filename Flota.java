@@ -27,11 +27,16 @@ public class Flota{
         System.out.println("Introdueix el nom del taulell que vols carregar: ");
         BufferedReader entradaTaulell = new BufferedReader(new InputStreamReader(System.in));
         nomTaulell = entradaTaulell.readLine().toLowerCase();
+        
+        // Quan l'usuari escrigui llista li mostrarem els taulells guardats
+        if(nomTaulell.equals("llista")){
+            Fitxers.mostraFitxersCarpetaTaulells();
+        }
 
         fitxerTrobat = Fitxers.fitxerExisteix(nomTaulell);
         
         if(! fitxerTrobat){
-            System.out.println("Fitxer no trobat.");
+            System.out.println("Fitxer no trobat. Considera Llista.");
             continue;
         }
 
@@ -101,14 +106,11 @@ public class Flota{
         System.out.println("Introdueix el vaixell: ");
             try{
                 BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
-                String coordenadaVaixell = entrada.readLine();
+                String entradaVaixell = entrada.readLine();
     
-                if(ConstructorTaulell.coordenadaValida(coordenadaVaixell)){
-    
-                    if(ConstructorTaulell.taulellCorrecteAmbNouVaixell(coordenadaVaixell)){ //TODO
-
-                        System.out.println("Fet!");
-                    }
+                if(TaulellJoc.coordenadaValida(entradaVaixell)){
+                    int[][] coordenadaVaixell = TaulellJoc.obteCoordenadesVaixell(entradaVaixell);
+                    Utility.mostraMatriu(coordenadaVaixell);
     
                 }else{
                     //  Si el vaixell està malament descrit, o no pot ser col·locat al lloc indicat perquè no hi cap o bé perquè toca un altre vaixell, es mostra el missatge d’error Vaixell no vàlid.

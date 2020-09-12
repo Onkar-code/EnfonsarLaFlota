@@ -276,7 +276,6 @@ public class ConstructorTaulell{
         if(quantitatDosPunts > 1 || quantitatComes != 1){
             return false;
         }
-
         return true;
     }
 
@@ -352,7 +351,6 @@ public class ConstructorTaulell{
                 }
             }
     }
-    
 
     public static boolean taulellCorrecteAmbNouVaixell(String coordenadaVaixell){
         //TODO
@@ -603,13 +601,7 @@ public class ConstructorTaulell{
         }
     }
 
-    // El mostrem per pantalla
-    for(int i = 0; i < files ;i++){
-        for(int j = 0; j < columnes ;j++){
-            System.out.print(taulell[i][j] + " ");
-        }
-        System.out.println();
-    }
+    Utility.mostraMatriu(taulellString);
  }
 
      public static void subMenuComandes(String[] llistaComandesDisponibles){

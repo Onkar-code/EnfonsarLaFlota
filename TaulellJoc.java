@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Arrays;
 
 // import per al diccionari de les descripciones d'AJUDA
@@ -94,6 +95,55 @@ public class TaulellJoc {
             }
             System.out.println();
         }
+    }
+
+    public static boolean coordenadaValida(String entradaVaixell){
+        if(! ConstructorTaulell.formatCorrecte(entradaVaixell)){
+            System.out.println("1");
+            return false;
+        }
+        
+        // if(! nombresCorrectes(coordenadaVaixell)){
+        //     return false;
+        // }
+
+        return true;
+    }
+
+    public static int[][] obteCoordenadesVaixell(String coordenadaVaixell ){
+        // Es considera que coordenadaVaixell té coordenades vàlides.
+
+        //Primer treiem els parèntesis i possibles espais
+        coordenadaVaixell = coordenadaVaixell.trim();
+        coordenadaVaixell = coordenadaVaixell.replace("(","");
+        coordenadaVaixell = coordenadaVaixell.replace(")","");
+
+        // Obtenim les coordenades amb contains() i split()
+        String[] coordenades = coordenadaVaixell.split(",");
+        String coordenadesFilaString = coordenades[0];
+        String coordenadesColumnaString = coordenades[1];
+
+        // Iniciatzem les coordenades de surtida a -1, són nombres no vàlids que s'hauran de comprovar posteriorment.
+        int[] coordenadaFila = {-1, -1};
+        int[] coordenadaColumna = {-1, -1};
+
+        // Comprovem els casos de dimensiones majors a 1
+        if(coordenadesFilaString.contains(":")){
+            String[] coordenadaFilaString = coordenadesFilaString.split(":");
+            coordenadaFila = Utility.StringArrayToIntArray(coordenadaFilaString);
+
+        }else if(coordenadesColumnaString.contains(":")){
+            String[] coordenadaColumnaString = coordenadesColumnaString.split(":");
+            coordenadaColumna = Utility.StringArrayToIntArray(coordenadaColumnaString);
+
+        }else{
+            coordenadaFila[0] = Integer.parseInt(coordenadesFilaString) ;
+            coordenadaColumna[0] = Integer.parseInt(coordenadesColumnaString);
+        }
+    
+        // Tornem la matriu de sortida amb les coordenades
+        int[][] sortida = {coordenadaFila, coordenadaColumna};
+        return sortida;
     }
 
     public static void soluciona(int[][] taulell){
