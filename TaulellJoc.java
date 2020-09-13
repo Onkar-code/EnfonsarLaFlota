@@ -27,6 +27,59 @@ public class TaulellJoc {
         return taulellBoolea;
     }
 
+    public static int calculaNombreVaixellsTaulell(int[][] taulell){
+        // Suposem que el taulell està ben construit
+
+        int nombreVaixells = 0;
+        int nombreVaixellsUnitat = 0;
+        int nombreVaixellsHoritzontal = 0;
+        int nombreVaixellsVertical = 0;
+
+        // Aquestes variables ens permetran diferenciar els vaixells d'una mateix fila o columna.
+        boolean vaixellVerticalTrobat = false; // Ignorarem els vaixells de tamany 1
+        // boolean fiVaixell = false;
+
+        for(int i = 0; i < taulell.length ;i++){
+            for(int j = 0; j < taulell[0].length ;j++){
+
+                if(taulell[i][j] == 0){ //ignorem l'aigua 
+                    continue;
+                }else if(taulell[i][j] == 1){ //Comprovem si és tamany 1
+                    nombreVaixellsUnitat++;
+                }else{
+
+                    //Comprovem els casos de tamany > 1
+                    int[] coordenades = {i,j};
+                    if(esVaixellHoritzontal(coordenades,taulell)){
+                        nombreVaixellsHoritzontal++;
+
+                        // Ens desplacem j columnes a la dreta, que és el tamany del vaixell.
+                        j += taulell[i][j];
+
+                        // Auqesta versió és per evitar problemes amb els indexos, però no poden haver-hi si el taullell està ben construït.
+                        // if(taulell[i].length > j + taulell[i][j]){
+                        //     j += taulell[i][j];
+                        // }
+                    }else{
+                        // vaixellVerticalTrobat = true;
+
+                        // if([][j]){
+
+                        // }
+
+                        // nombreVaixellsVertical++;
+            
+                    }
+                }
+            }
+        }
+
+
+        nombreVaixells = nombreVaixellsUnitat + nombreVaixellsHoritzontal + nombreVaixellsVertical;
+
+        return nombreVaixells;
+    }
+
 
     public static void ajuda(){
         //el programa mostra un text d’ajuda amb les diferents comandes disponibles.
@@ -113,17 +166,7 @@ public class TaulellJoc {
         }
     }
 
-    // public static boolean coordenadaValida(String entradaVaixell){
-    //     if(! ConstructorTaulell.formatCorrecte(entradaVaixell)){
-    //         return false;
-    //     }
-        
-    //     // if(! nombresCorrectes(coordenadaVaixell)){
-    //     //     return false;
-    //     // }
 
-    //     return true;
-    // }
 
     public static boolean formatCorrecte(String coordenadaVaixell){
         // Comprobem la longitud. No pot ser 0 ni més gran que 12 per a un taulell 99x99 ( 90:99, 90) 
@@ -148,7 +191,6 @@ public class TaulellJoc {
                 quantitatComes++;
             }
         }
-
         if(quantitatDosPunts > 0 || quantitatComes != 1){
             return false;
         }
@@ -229,11 +271,7 @@ public class TaulellJoc {
             }
             System.out.println();
         }
-
-        // Sortim del joc
-        System.out.println("\nJo guanyo!");
-        System.exit(0);
-        
+        System.out.println();
     }
 
     public static boolean coordenadesDintreTaulell(int[] coordenadesVaixell,int files, int columnes ){
@@ -244,7 +282,6 @@ public class TaulellJoc {
                     dintre = false;
                 }
         }
-
         return dintre;
     }
 
@@ -273,7 +310,6 @@ public class TaulellJoc {
                 enfonsat = true;
             }
         }
-
         return enfonsat;
     }
 
@@ -296,7 +332,6 @@ public class TaulellJoc {
         }
 
         return enfonsat;
-        
     }
 
     public static boolean esVaixellVerticalEnfonsat(int[] coordenadesVaixell, int[][] taulell, Boolean[][] taulellBolea){
@@ -308,17 +343,16 @@ public class TaulellJoc {
         int tamanyVaixell = taulell[fila][columna];
         int comptadorDanys = 0;
 
-        int danysDreta = comptaImpactesAdalt(fila, columna, taulell, taulellBolea);
-        int danysEsquerra = comptaImpactesAbaix(fila, columna, taulell, taulellBolea);
+        int danysAdalt = comptaImpactesAdalt(fila, columna, taulell, taulellBolea);
+        int danysAbaix = comptaImpactesAbaix(fila, columna, taulell, taulellBolea);
 
-        comptadorDanys = danysEsquerra + danysDreta - 1; //Restem 1 perquè començem pel mateix lloc en ambdues funcions.
+        comptadorDanys = danysAdalt + danysAbaix - 1; //Restem 1 perquè començem pel mateix lloc en ambdues funcions.
 
         if( comptadorDanys ==  tamanyVaixell){
             enfonsat = true;
         }
 
         return enfonsat;
-        
     }
 
     public static int comptaImpactesDreta(int fila, int columna, int[][] taulell, Boolean[][] taulellBolea){
@@ -338,7 +372,7 @@ public class TaulellJoc {
     public static int comptaImpactesEsquerra(int fila, int columna, int[][] taulell, Boolean[][] taulellBolea){
         int impactes = 0;
 
-        for(int j = columna; j > 0 ;j--){
+        for(int j = columna; j > -1 ;j--){
             if(taulellBolea[fila][j] == true && taulell[fila][j] > 1){
                 impactes++;
             }else{
@@ -353,7 +387,7 @@ public class TaulellJoc {
         int impactes = 0;
 
         for(int i = fila; i < taulell.length ;i++){
-            if(taulellBolea[i][fila] == true && taulell[i][fila] > 1){
+            if(taulellBolea[i][fila] == true && taulell[i][columna] > 1){
                 impactes++;
             }else{
                 return impactes;
@@ -366,8 +400,8 @@ public class TaulellJoc {
     public static int comptaImpactesAdalt(int fila, int columna, int[][] taulell, Boolean[][] taulellBolea){
         int impactes = 0;
 
-        for(int i = fila; i > 0 ;i--){
-            if(taulellBolea[i][fila] == true && taulell[i][fila] > 1){
+        for(int i = fila; i > -1 ;i--){
+            if(taulellBolea[i][fila] == true && taulell[i][columna] > 1){
                 impactes++;
             }else{
                 return impactes;

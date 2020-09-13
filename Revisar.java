@@ -52,4 +52,35 @@ public class Revisar {
                 }
             }
         }
+
+    // // Dimensions vaixell
+    // int filesVaixell = coordenadesVaixell[0].length;
+    // int columnesVaixell = coordenadesVaixell[1].length;
+
+    // // Coordenades del vaixell
+    // int x0 = coordenadesVaixell[0][0];
+    // if(filesVaixell > 1){
+    //     int x1 = coordenadesVaixell[0][1];
+    //     System.out.println("x1: " + x1);
+    // }
+
+    // int y0 = coordenadesVaixell[1][0];
+    // if(columnesVaixell > 1){
+    //     int y1 = coordenadesVaixell[1][1];
+    //     System.out.println("y1: " + y1);
+    // }
+
+    // System.out.println("x0: " + x0 + " y0:" + y0);
+
+    // public static boolean coordenadaValida(String entradaVaixell){
+    //     if(! ConstructorTaulell.formatCorrecte(entradaVaixell)){
+    //         return false;
+    //     }
+        
+    //     // if(! nombresCorrectes(coordenadaVaixell)){
+    //     //     return false;
+    //     // }
+
+    //     return true;
+    // }
 }

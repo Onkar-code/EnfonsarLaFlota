@@ -14,6 +14,10 @@ public class Flota{
     static int files;
     static int columnes;
 
+    static int nombreVaixellsTaulell;
+    static int nombreVaixellsEnfonsats = 0;
+    static boolean victoria = false;
+
     public static void main(String[] args) throws IOException{
         /*
         En arrencar el programa, carrega el taulell contingut a un fitxer, a partir del nom del taulell segons s’hagi definit a ConstructorTaulell.
@@ -51,6 +55,9 @@ public class Flota{
             files = taulell.length;
             columnes = taulell[0].length;
 
+            // Calculem el nombre de vaixells, servirà per determinar si es cumpleix la condició de victoria (enfonsar tots els vaixells)
+            nombreVaixellsTaulell = TaulellJoc.calculaNombreVaixellsTaulell(taulellOriginal);
+
             // Finalment, mostrem el taulell inicial de joc
             TaulellJoc.mostraTaulell(taulell, taulellBoolea);
         }
@@ -60,7 +67,6 @@ public class Flota{
 
         // Amb aquest do()while{} el que demanem és l'entrada de la comanda per part de l'usuari fins que entri una comanda vàlida.
         do{
-
             System.out.println("Introdueix la comanda que vols executar ( escriu 'AJUDA' per veure les comandes ): ");
 
             BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
@@ -94,6 +100,9 @@ public class Flota{
 
             case "SOLUCIONA":
                 TaulellJoc.soluciona(taulellOriginal);
+                // Sortim del joc
+                System.out.println("Jo guanyo!");
+                System.exit(0);
                 break;
 
             case "JUGA":
@@ -124,25 +133,6 @@ public class Flota{
                         return;
                     }
 
-                    // // Dimensions vaixell
-                    // int filesVaixell = coordenadesVaixell[0].length;
-                    // int columnesVaixell = coordenadesVaixell[1].length;
-
-                    // // Coordenades del vaixell
-                    // int x0 = coordenadesVaixell[0][0];
-                    // if(filesVaixell > 1){
-                    //     int x1 = coordenadesVaixell[0][1];
-                    //     System.out.println("x1: " + x1);
-                    // }
-
-                    // int y0 = coordenadesVaixell[1][0];
-                    // if(columnesVaixell > 1){
-                    //     int y1 = coordenadesVaixell[1][1];
-                    //     System.out.println("y1: " + y1);
-                    // }
-
-                    // System.out.println("x0: " + x0 + " y0:" + y0);
-
                     // Comprovem que les coordenades hi són dintre del taulell
                     if(! TaulellJoc.coordenadesDintreTaulell(coordenadesVaixell, files, columnes)){
                         System.out.println("Les coordenades hi són fora del taulell!");
@@ -170,8 +160,19 @@ public class Flota{
                         TaulellJoc.modificaTaulell(coordenadesVaixell, taulellBoolea);
                         if(TaulellJoc.vaixellEnfonsat(coordenadesVaixell,taulell, taulellBoolea)){
                             System.out.println("TOCAT I ENFONSAT!");
-                            TaulellJoc.mostraTaulell(taulell, taulellBoolea);
 
+                            nombreVaixellsEnfonsats++;
+
+                            // Comprovem si el jugador ha guanyat
+                            condicionesVictoriaEstablertes();
+                            if(victoria){
+                                netejaFinestra();
+                                System.out.println("FELICITATS! HAS GUANYAT!\n");
+                                TaulellJoc.soluciona(taulellOriginal);
+                                System.exit(0);
+                            }else{
+                                TaulellJoc.mostraTaulell(taulell, taulellBoolea);
+                            }
                         }else{
                             System.out.println("TOCAT!");
                             TaulellJoc.mostraTaulell(taulell, taulellBoolea);
@@ -184,5 +185,17 @@ public class Flota{
             }catch(IOException e){
                 System.out.println("Error");
             }
+    }
+
+    public static void condicionesVictoriaEstablertes(){
+        victoria = nombreVaixellsEnfonsats == nombreVaixellsTaulell ? true : false;
+    }
+
+    /**
+     * Neteja la finestra de la consola
+     */
+    static void netejaFinestra() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }
